@@ -1,5 +1,7 @@
+const PI = 3.1415926535;
+
 class Wobble {
-  constructor(_c1, _c2) {
+  constructor(_c1, _c2, _color) {
     /**
      **  This swapping might need to be done each time to ensure the drawing is correct.
      **  Alternatively, the drawing steps need to be "smarter" to draw the points right.
@@ -19,6 +21,8 @@ class Wobble {
       b: null,
       c: null
     };
+
+    this.color = _color || "#ffffffff";
 
     this.update();
   }
@@ -163,7 +167,7 @@ class Wobble {
       this.c1points.a.anchor.y
     );
 
-    endShape(); // option to just use CLOSE if this remains a vertex
+    endShape();
   }
 
   drawStruct() {

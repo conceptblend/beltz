@@ -5,11 +5,8 @@
 const SIZE = 1080;
 const MODIFIER = 1.4;
 
-const SHOW_CONTROL_HANDLES = !true;
 const SHOW_STRUCTURE = !true;
 const EXPORT_IMAGE = true;
-
-const PI = 3.1415926535;
 
 const presets = {
   one: {
@@ -80,11 +77,29 @@ const presets = {
     },
     c3: null,
   },
+  five: {
+    label: "three-five",
+    c1: {
+      x: SIZE * 0.2,
+      y: SIZE * 0.8,
+      r: SIZE * 0.03,// 16/540
+    },
+    c2: {
+      x: SIZE * 0.5,
+      y: SIZE * 0.3,
+      r: SIZE * 0.09,// 48/540
+    },
+    c3: {
+      x: SIZE * 0.8,
+      y: SIZE * 0.8,
+      r: SIZE * 0.03,// 16/540
+    },
+  },
 };
 
-let config = presets.two;
+let config = presets.five;
 
-let c1, c2, c3;
+let c1, c2, c3, c4;
 let w1, w2;
 
 let pinnedPoint;
@@ -115,17 +130,18 @@ function draw() {
   // background(32);
   
   // HSB
-  stroke( frameCount % 64, 192, 255, 16 ); // red-orange
+  // stroke( frameCount % 48, 192, 255, 16 ); // red-orange
+  stroke( 0, 0, 255, 16 ); // white
   
   // USE MOUSE TO CONTROL
   let mx = Math.min( Math.max( 0, mouseX ), SIZE )
   let my = Math.min( Math.max( 0, mouseY ), SIZE )
   
   // WOBBLE
-  let rr = SIZE * 0.12;
+  let rr = SIZE * 0.09;
   
   // Optional scaling over time.
-  c2.setRadius(16 + (0.5 + 0.5 * Math.sin( frameCount * 0.1 )) * rr );
+  c2.setRadius(config.c2.r + (0.5 + 0.5 * Math.cos( frameCount * 0.1 )) * rr );
 
   // Use conditional if you want to prevent weird overlaps.
   // It's kind of more fun if you don't prevent this though.
@@ -133,20 +149,19 @@ function draw() {
     c2.pos.x = mx;
     c2.pos.y = my;
   } else {
-    c2.pos.x = config.c2.x + Math.cos( frameCount ) * 64;
-    c2.pos.y = config.c2.y + Math.sin( frameCount ) * 64;
+    c2.pos.x = config.c2.x + Math.cos( frameCount ) * 8;
+    c2.pos.y = config.c2.y + Math.sin( frameCount ) * 8;
   }
 
 
-  [w1,w2].forEach( w => {
+  [w1, w2/*, w3*/].forEach( w => {
     w.update();
     w.draw();
     if ( SHOW_STRUCTURE ) {
       w.drawStruct();
     }
   })
-  
-  
+
   if ( EXPORT_IMAGE && frameCount > 761 ) {
     save(`${getName()}.png`);
     noLoop();

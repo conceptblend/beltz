@@ -43,7 +43,7 @@ class Wobble {
     // Calculate the additional offset for anchor point based on
     // the Common Direct Tangent between the circles.
     // https://www.math-only-math.com/important-properties-of-direct-common-tangents.html
-    let dist = p5.Vector.dist(this.c2.pos, this.c1.pos);
+    let dist = p5.Vector.dist( this.c2.pos, this.c1.pos );
     let rDelta = this.c1.r - this.c2.r ;
     let theta = Math.acos( rDelta / dist ); // for a happy accident make this 90 + acos();
 
@@ -54,6 +54,10 @@ class Wobble {
     let ratio = theta / (PI * 0.5);
     let lengthA = this.c1.o * ratio;
     let lengthB = this.c1.o / ratio;
+
+    // [Lazy] Guard against busted ratios
+    if (Number.isNaN( lengthA )) lengthA = 1;
+    if (Number.isNaN( lengthB )) lengthB = 1;
 
     tmp = p5.Vector.rotate( c1c2, theta );
     this.c1points.a = new BezierPoint(
@@ -84,6 +88,10 @@ class Wobble {
     ratio = theta / (PI * 0.5);
     lengthA = this.c2.o * ratio;
     lengthB = this.c2.o / ratio;
+
+    // [Lazy] Guard against busted ratios
+    if (Number.isNaN( lengthA )) lengthA = 1;
+    if (Number.isNaN( lengthB )) lengthB = 1;
 
     tmp = p5.Vector.rotate( c2c1, theta );
     length = this.c2.o;

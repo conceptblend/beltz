@@ -5,8 +5,8 @@
 const SIZE = 1080;
 const MODIFIER = 1.4;
 
-const SHOW_STRUCTURE = !true;
-const EXPORT_IMAGE = true;
+const SHOW_STRUCTURE = true;
+const EXPORT_IMAGE = !true;
 
 const presets = {
   one: {
@@ -54,7 +54,7 @@ const presets = {
     },
     c2: {
       x: SIZE * 0.5,
-      y: SIZE * 0.5,
+      y: SIZE * 0.4,
       r: SIZE * 0.03,// 16/540
     },
     c3: {
@@ -97,7 +97,7 @@ const presets = {
   },
 };
 
-let config = presets.five;
+let config = presets.three;
 
 let c1, c2, c3, c4;
 let w1, w2;
@@ -119,9 +119,9 @@ function setup() {
 
   w1 = new Wobble( c2, c1 );
   w2 = new Wobble( c3, c2 );
-  w3 = new Wobble( c4, c2 );
+  // w3 = new Wobble( c4, c2 );
 
-  // noLoop();
+  noLoop();
 
   background(32);
 }
@@ -132,6 +132,7 @@ function draw() {
   // HSB
   // stroke( frameCount % 48, 192, 255, 16 ); // red-orange
   stroke( 0, 0, 255, 16 ); // white
+  // stroke( 0,   0, 255 ); // white
   
   // USE MOUSE TO CONTROL
   let mx = Math.min( Math.max( 0, mouseX ), SIZE )
